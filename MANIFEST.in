@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include accommodation *.css
+recursive-include accommodation *.csv
+recursive-include accommodation *.html
+recursive-include accommodation *.ico
+recursive-include accommodation *.js
+recursive-include accommodation *.json
+recursive-include accommodation *.md
+recursive-include accommodation *.png
+recursive-include accommodation *.py
+recursive-include accommodation *.svg
+recursive-include accommodation *.txt
+recursive-exclude accommodation *.pyc

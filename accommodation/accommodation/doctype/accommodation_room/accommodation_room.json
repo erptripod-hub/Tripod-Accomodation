@@ -1,0 +1,207 @@
+{
+ "actions": [],
+ "creation": "2026-08-04 09:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "accommodation",
+  "room_no",
+  "company",
+  "region",
+  "cb_1",
+  "block",
+  "floor",
+  "room_type",
+  "capacity",
+  "gender",
+  "status",
+  "sb_counts",
+  "occupied_beds",
+  "reserved_beds",
+  "cb_2",
+  "available_beds",
+  "blocked_beds"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "ROOM-.#####",
+   "default": "ROOM-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "accommodation",
+   "label": "Accommodation",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Accommodation",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "room_no",
+   "label": "Room No",
+   "fieldtype": "Data",
+   "read_only": 0,
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Company",
+   "fetch_from": "accommodation.company",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "region",
+   "label": "Region",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "\nUAE\nKSA\nOther",
+   "fetch_from": "accommodation.region"
+  },
+  {
+   "fieldname": "cb_1",
+   "label": "",
+   "fieldtype": "Column Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "block",
+   "label": "Block",
+   "fieldtype": "Data",
+   "read_only": 0
+  },
+  {
+   "fieldname": "floor",
+   "label": "Floor",
+   "fieldtype": "Data",
+   "read_only": 0
+  },
+  {
+   "fieldname": "room_type",
+   "label": "Room Type",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "Bunk\nShared\nDouble\nSingle\nPartition",
+   "default": "Bunk"
+  },
+  {
+   "fieldname": "capacity",
+   "label": "Capacity (Beds)",
+   "fieldtype": "Int",
+   "read_only": 0,
+   "reqd": 1,
+   "default": "6",
+   "in_list_view": 1,
+   "description": "Bedspaces are created or extended automatically when this is saved."
+  },
+  {
+   "fieldname": "gender",
+   "label": "Gender Restriction",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "Any\nMale\nFemale",
+   "default": "Any"
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "Active\nInactive",
+   "default": "Active"
+  },
+  {
+   "fieldname": "sb_counts",
+   "label": "Occupancy",
+   "fieldtype": "Section Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "occupied_beds",
+   "label": "Occupied",
+   "fieldtype": "Int",
+   "read_only": 0
+  },
+  {
+   "fieldname": "reserved_beds",
+   "label": "Reserved",
+   "fieldtype": "Int",
+   "read_only": 0
+  },
+  {
+   "fieldname": "cb_2",
+   "label": "",
+   "fieldtype": "Column Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "available_beds",
+   "label": "Available",
+   "fieldtype": "Int",
+   "read_only": 0
+  },
+  {
+   "fieldname": "blocked_beds",
+   "label": "Blocked",
+   "fieldtype": "Int",
+   "read_only": 0
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-04 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accommodation",
+ "name": "Accommodation Room",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "HR Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "title_field": "room_no",
+ "show_title_field_in_link": 1,
+ "search_fields": "room_no,accommodation"
+}

@@ -1,0 +1,191 @@
+{
+ "actions": [],
+ "creation": "2026-08-04 09:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "room",
+  "bed_no",
+  "accommodation",
+  "company",
+  "cb_1",
+  "bed_position",
+  "status",
+  "blocked_reason",
+  "sb_current",
+  "current_employee",
+  "current_allocation",
+  "cb_2",
+  "reserved_for",
+  "expected_arrival_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "BED-.#####",
+   "default": "BED-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "room",
+   "label": "Room",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Accommodation Room",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "bed_no",
+   "label": "Bed No",
+   "fieldtype": "Data",
+   "read_only": 0,
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "accommodation",
+   "label": "Accommodation",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Accommodation",
+   "fetch_from": "room.accommodation",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Company",
+   "fetch_from": "room.company",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "label": "",
+   "fieldtype": "Column Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "bed_position",
+   "label": "Position",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "Lower\nUpper\nSingle",
+   "default": "Lower"
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "Available\nOccupied\nReserved\nBlocked",
+   "default": "Available",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "blocked_reason",
+   "label": "Blocked Reason",
+   "fieldtype": "Small Text",
+   "read_only": 0,
+   "depends_on": "eval:doc.status=='Blocked'"
+  },
+  {
+   "fieldname": "sb_current",
+   "label": "Current Occupant",
+   "fieldtype": "Section Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "current_employee",
+   "label": "Current Employee",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Employee",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "current_allocation",
+   "label": "Current Allocation",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Accommodation Allocation"
+  },
+  {
+   "fieldname": "cb_2",
+   "label": "",
+   "fieldtype": "Column Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "reserved_for",
+   "label": "Reserved For",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Employee",
+   "depends_on": "eval:doc.status=='Reserved'"
+  },
+  {
+   "fieldname": "expected_arrival_date",
+   "label": "Expected Arrival",
+   "fieldtype": "Date",
+   "read_only": 0,
+   "depends_on": "eval:doc.status=='Reserved'"
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-04 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accommodation",
+ "name": "Accommodation Bed",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "HR Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "title_field": "bed_no",
+ "show_title_field_in_link": 1,
+ "search_fields": "bed_no,room,accommodation"
+}

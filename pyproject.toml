@@ -1,0 +1,19 @@
+[project]
+name = "accommodation"
+authors = [
+    { name = "Tripod Group", email = "it@tripodgroup.com" }
+]
+description = "Bedspace-level accommodation management for Tripod Group"
+requires-python = ">=3.10"
+readme = "README.md"
+dynamic = ["version"]
+dependencies = []
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.bench.frappe-dependencies]
+frappe = ">=14.0.0,<15.0.0"
+erpnext = ">=14.0.0,<15.0.0"
+hrms = ">=14.0.0,<15.0.0"

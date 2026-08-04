@@ -1,0 +1,283 @@
+{
+ "actions": [],
+ "creation": "2026-08-04 09:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "accommodation_name",
+  "company",
+  "region",
+  "accommodation_type",
+  "cb_1",
+  "city",
+  "address",
+  "status",
+  "image",
+  "sb_contract",
+  "landlord",
+  "contract_start_date",
+  "contract_end_date",
+  "annual_rent",
+  "cb_2",
+  "permit_no",
+  "permit_expiry",
+  "supervisor",
+  "sb_setup",
+  "room_setup",
+  "sb_capacity",
+  "total_rooms",
+  "total_beds",
+  "occupied_beds",
+  "cb_3",
+  "reserved_beds",
+  "available_beds",
+  "blocked_beds"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "ACC-.####",
+   "default": "ACC-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "accommodation_name",
+   "label": "Accommodation Name",
+   "fieldtype": "Data",
+   "read_only": 0,
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Company",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "region",
+   "label": "Region",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "\nUAE\nKSA\nOther",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "accommodation_type",
+   "label": "Type",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "Labour Camp\nStaff Villa\nApartment\nOther",
+   "default": "Labour Camp",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "label": "",
+   "fieldtype": "Column Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "city",
+   "label": "City / Emirate",
+   "fieldtype": "Data",
+   "read_only": 0
+  },
+  {
+   "fieldname": "address",
+   "label": "Address",
+   "fieldtype": "Small Text",
+   "read_only": 0
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "Active\nInactive",
+   "default": "Active",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "image",
+   "label": "Photo",
+   "fieldtype": "Attach Image",
+   "read_only": 0
+  },
+  {
+   "fieldname": "sb_contract",
+   "label": "Tenancy Contract",
+   "fieldtype": "Section Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "landlord",
+   "label": "Landlord",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Supplier"
+  },
+  {
+   "fieldname": "contract_start_date",
+   "label": "Contract Start",
+   "fieldtype": "Date",
+   "read_only": 0
+  },
+  {
+   "fieldname": "contract_end_date",
+   "label": "Contract End",
+   "fieldtype": "Date",
+   "read_only": 0
+  },
+  {
+   "fieldname": "annual_rent",
+   "label": "Annual Rent",
+   "fieldtype": "Currency",
+   "read_only": 0
+  },
+  {
+   "fieldname": "cb_2",
+   "label": "",
+   "fieldtype": "Column Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "permit_no",
+   "label": "Municipality Permit No",
+   "fieldtype": "Data",
+   "read_only": 0
+  },
+  {
+   "fieldname": "permit_expiry",
+   "label": "Permit Expiry",
+   "fieldtype": "Date",
+   "read_only": 0
+  },
+  {
+   "fieldname": "supervisor",
+   "label": "Camp Supervisor",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Employee"
+  },
+  {
+   "fieldname": "sb_setup",
+   "label": "Room Setup",
+   "fieldtype": "Section Break",
+   "read_only": 0,
+   "description": "Fill the rows then press Generate Rooms. Rooms and bedspaces are created automatically."
+  },
+  {
+   "fieldname": "room_setup",
+   "label": "Room Setup",
+   "fieldtype": "Table",
+   "read_only": 0,
+   "options": "Accommodation Room Setup"
+  },
+  {
+   "fieldname": "sb_capacity",
+   "label": "Capacity",
+   "fieldtype": "Section Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "total_rooms",
+   "label": "Total Rooms",
+   "fieldtype": "Int",
+   "read_only": 0
+  },
+  {
+   "fieldname": "total_beds",
+   "label": "Total Beds",
+   "fieldtype": "Int",
+   "read_only": 0
+  },
+  {
+   "fieldname": "occupied_beds",
+   "label": "Occupied",
+   "fieldtype": "Int",
+   "read_only": 0
+  },
+  {
+   "fieldname": "cb_3",
+   "label": "",
+   "fieldtype": "Column Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "reserved_beds",
+   "label": "Reserved",
+   "fieldtype": "Int",
+   "read_only": 0
+  },
+  {
+   "fieldname": "available_beds",
+   "label": "Available",
+   "fieldtype": "Int",
+   "read_only": 0
+  },
+  {
+   "fieldname": "blocked_beds",
+   "label": "Blocked",
+   "fieldtype": "Int",
+   "read_only": 0
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-04 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accommodation",
+ "name": "Accommodation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "HR Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "title_field": "accommodation_name",
+ "show_title_field_in_link": 1,
+ "image_field": "image",
+ "search_fields": "accommodation_name,company,city"
+}

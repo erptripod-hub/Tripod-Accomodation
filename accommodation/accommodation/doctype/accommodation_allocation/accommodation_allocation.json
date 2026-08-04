@@ -1,0 +1,280 @@
+{
+ "actions": [],
+ "creation": "2026-08-04 09:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "employee",
+  "employee_name",
+  "designation",
+  "employee_company",
+  "cb_1",
+  "allocation_type",
+  "stay_type",
+  "status",
+  "sb_bed",
+  "accommodation",
+  "room",
+  "bed",
+  "cb_2",
+  "accommodation_company",
+  "is_cross_entity",
+  "sb_dates",
+  "expected_arrival_date",
+  "check_in_date",
+  "expected_check_out",
+  "cb_3",
+  "actual_check_out",
+  "duration_days",
+  "sb_more",
+  "remarks",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "ALLOC-.#####",
+   "default": "ALLOC-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "employee",
+   "label": "Employee",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Employee",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "employee_name",
+   "label": "Employee Name",
+   "fieldtype": "Data",
+   "read_only": 0,
+   "fetch_from": "employee.employee_name",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "designation",
+   "label": "Designation",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Designation",
+   "fetch_from": "employee.designation"
+  },
+  {
+   "fieldname": "employee_company",
+   "label": "Employee Company (Visa Entity)",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Company",
+   "fetch_from": "employee.company",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "label": "",
+   "fieldtype": "Column Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "allocation_type",
+   "label": "Allocation Type",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "Check-In\nReservation",
+   "default": "Check-In",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "stay_type",
+   "label": "Stay Type",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "Permanent\nDeployment\nTemporary",
+   "default": "Permanent"
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "Draft\nReserved\nActive\nVacated\nCancelled",
+   "default": "Draft",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "sb_bed",
+   "label": "Bedspace",
+   "fieldtype": "Section Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "accommodation",
+   "label": "Accommodation",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Accommodation",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "room",
+   "label": "Room",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Accommodation Room",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bed",
+   "label": "Bed",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Accommodation Bed",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_2",
+   "label": "",
+   "fieldtype": "Column Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "accommodation_company",
+   "label": "Accommodation Company (Owner)",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Company",
+   "fetch_from": "accommodation.company"
+  },
+  {
+   "fieldname": "is_cross_entity",
+   "label": "Cross-Entity Stay",
+   "fieldtype": "Check",
+   "read_only": 0,
+   "description": "Ticked when the employee's visa entity differs from the company that owns the accommodation."
+  },
+  {
+   "fieldname": "sb_dates",
+   "label": "Dates",
+   "fieldtype": "Section Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "expected_arrival_date",
+   "label": "Expected Arrival",
+   "fieldtype": "Date",
+   "read_only": 0,
+   "depends_on": "eval:doc.allocation_type=='Reservation'"
+  },
+  {
+   "fieldname": "check_in_date",
+   "label": "Check-In Date",
+   "fieldtype": "Date",
+   "read_only": 0,
+   "depends_on": "eval:doc.allocation_type=='Check-In'"
+  },
+  {
+   "fieldname": "expected_check_out",
+   "label": "Expected Check-Out",
+   "fieldtype": "Date",
+   "read_only": 0
+  },
+  {
+   "fieldname": "cb_3",
+   "label": "",
+   "fieldtype": "Column Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "actual_check_out",
+   "label": "Actual Check-Out",
+   "fieldtype": "Date",
+   "read_only": 0
+  },
+  {
+   "fieldname": "duration_days",
+   "label": "Duration (Days)",
+   "fieldtype": "Int",
+   "read_only": 0
+  },
+  {
+   "fieldname": "sb_more",
+   "label": "More",
+   "fieldtype": "Section Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "remarks",
+   "label": "Remarks",
+   "fieldtype": "Small Text",
+   "read_only": 0
+  },
+  {
+   "fieldname": "amended_from",
+   "label": "Amended From",
+   "fieldtype": "Link",
+   "read_only": 1,
+   "options": "Accommodation Allocation",
+   "no_copy": 1,
+   "print_hide": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-04 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accommodation",
+ "name": "Accommodation Allocation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "HR Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "is_submittable": 1,
+ "title_field": "employee_name",
+ "show_title_field_in_link": 1,
+ "search_fields": "employee,employee_name,accommodation"
+}

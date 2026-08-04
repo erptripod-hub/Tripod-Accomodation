@@ -1,0 +1,90 @@
+{
+ "actions": [],
+ "creation": "2026-08-04 09:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "block",
+  "floor",
+  "room_prefix",
+  "from_number",
+  "to_number",
+  "capacity",
+  "room_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "block",
+   "label": "Block",
+   "fieldtype": "Data",
+   "read_only": 0,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "floor",
+   "label": "Floor",
+   "fieldtype": "Data",
+   "read_only": 0,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "room_prefix",
+   "label": "Room Prefix",
+   "fieldtype": "Data",
+   "read_only": 0,
+   "in_list_view": 1,
+   "columns": 2,
+   "description": "e.g. A-1 produces A-101, A-102"
+  },
+  {
+   "fieldname": "from_number",
+   "label": "From",
+   "fieldtype": "Int",
+   "read_only": 0,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "to_number",
+   "label": "To",
+   "fieldtype": "Int",
+   "read_only": 0,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "capacity",
+   "label": "Beds per Room",
+   "fieldtype": "Int",
+   "read_only": 0,
+   "in_list_view": 1,
+   "columns": 1,
+   "default": "6"
+  },
+  {
+   "fieldname": "room_type",
+   "label": "Room Type",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "Bunk\nShared\nDouble\nSingle\nPartition",
+   "in_list_view": 1,
+   "columns": 2,
+   "default": "Bunk"
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-04 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accommodation",
+ "name": "Accommodation Room Setup",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "istable": 1
+}
