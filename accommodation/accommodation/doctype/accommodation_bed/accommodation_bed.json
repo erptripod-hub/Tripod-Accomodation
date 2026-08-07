@@ -19,7 +19,9 @@
   "current_allocation",
   "cb_2",
   "reserved_for",
-  "expected_arrival_date"
+  "expected_arrival_date",
+  "reserved_until",
+  "bed_reservation"
  ],
  "fields": [
   {
@@ -140,6 +142,22 @@
    "fieldtype": "Date",
    "read_only": 0,
    "depends_on": "eval:doc.status=='Reserved'"
+  },
+  {
+   "fieldname": "reserved_until",
+   "label": "Reserved Until",
+   "fieldtype": "Date",
+   "read_only": 0,
+   "depends_on": "eval:doc.status=='Reserved'"
+  },
+  {
+   "fieldname": "bed_reservation",
+   "label": "Bed Reservation",
+   "fieldtype": "Link",
+   "options": "Accommodation Bed Reservation",
+   "read_only": 0,
+   "depends_on": "eval:doc.status=='Reserved'",
+   "description": "Set when the bed is held by a bulk reservation rather than a named employee."
   }
  ],
  "links": [],

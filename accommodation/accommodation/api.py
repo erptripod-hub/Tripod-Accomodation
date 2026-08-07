@@ -220,6 +220,7 @@ def get_room(room):
 		fields=[
 			"name", "bed_no", "bed_position", "status", "blocked_reason",
 			"current_employee", "current_allocation", "reserved_for", "expected_arrival_date",
+			"bed_reservation", "reserved_until",
 		],
 		order_by="bed_no",
 	)
@@ -492,3 +493,70 @@ def get_tracker(company=None):
 		"movements": movements,
 		"unallocated": count_unallocated(company),
 	}
+
+
+@frappe.whitelist()
+def reserve_beds(accommodation, headcount, reserved_from, reserved_until, room=None,
+                 purpose="New Joiners", remarks=None):
+	"""Hold a number of free bedspaces without naming employees."""
+	check_access()
+
+	doc = frappe.new_doc("Accommodation Bed Reservation")
+	doc.accommodation = accommodation
+	doc.room = room
+	doc.purpose = purpose
+	doc.headcount = int(headcount)
+	doc.reserved_from = getdate(reserved_from)
+	doc.reserved_until = getdate(reserved_until)
+	doc.remarks = remarks
+	doc.insert()
+
+	added = doc.fetch_available_beds()
+	if not added:
+		frappe.throw(_("No free bedspaces available to reserve."))
+
+	doc.reload()
+	doc.submit()
+	return {"reservation": doc.name, "beds": len(doc.beds)}
+
+
+@frappe.whitelist()
+def release_bulk_hold(bed):
+	"""Free one bed that is part of a bulk hold."""
+	check_access()
+
+	reservation = frappe.db.get_value("Accommodation Bed", bed, "bed_reservation")
+	if not reservation:
+		frappe.throw(_("This bedspace is not part of a bulk reservation."))
+
+	frappe.db.delete("Accommodation Reserved Bed", {"parent": reservation, "bed": bed})
+
+	room, accommodation = frappe.db.get_value(
+		"Accommodation Bed", bed, ["room", "accommodation"]
+	)
+	frappe.db.set_value(
+		"Accommodation Bed",
+		bed,
+		{
+			"status": "Available",
+			"bed_reservation": None,
+			"reserved_until": None,
+			"reserved_for": None,
+			"expected_arrival_date": None,
+		},
+		update_modified=False,
+	)
+
+	from accommodation.accommodation.doctype.accommodation.accommodation import (
+		refresh_parent_counts,
+	)
+
+	refresh_parent_counts(accommodation=accommodation, room=room)
+
+	if not frappe.db.count("Accommodation Reserved Bed", {"parent": reservation}):
+		frappe.db.set_value(
+			"Accommodation Bed Reservation", reservation, "status", "Released",
+			update_modified=False,
+		)
+
+	return {"status": "Available"}
