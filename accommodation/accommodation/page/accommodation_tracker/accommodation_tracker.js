@@ -121,6 +121,8 @@ class AccommodationTracker {
 			frappe.new_doc("Accommodation Allocation")
 		);
 
+		this.page.add_menu_item(__("Reserve Beds"), () => this.dialog_bulk_reserve());
+
 		this.page.add_menu_item(__("Properties"), () => this.load_home());
 		this.page.add_menu_item(__("Live Tracker"), () => this.load_tracker());
 		this.page.add_menu_item(__("Occupancy Report"), () =>
@@ -455,7 +457,11 @@ class AccommodationTracker {
 		if (!bed) return;
 		if (bed.status === "Available") return this.dialog_allocate(bed);
 		if (bed.status === "Occupied") return this.dialog_vacate(bed);
-		if (bed.status === "Reserved") return this.dialog_reserved(bed);
+		if (bed.status === "Reserved") {
+			return bed.bed_reservation
+				? this.dialog_bulk_held(bed)
+				: this.dialog_reserved(bed);
+		}
 		return this.dialog_blocked(bed);
 	}
 
@@ -624,6 +630,152 @@ class AccommodationTracker {
 						})
 						.catch(() => frappe.dom.unfreeze());
 				});
+			},
+		});
+		d.show();
+	}
+
+	dialog_bulk_held(bed) {
+		const d = new frappe.ui.Dialog({
+			title: __("Bed {0} · {1}", [bed.bed_no, __("Held")]),
+			fields: [
+				{
+					fieldname: "info",
+					fieldtype: "HTML",
+					options: `<table class="table table-bordered small" style="margin-bottom:12px">
+						<tr><td class="text-muted">${__("Held by")}</td><td>${this.esc(bed.bed_reservation)}</td></tr>
+						<tr><td class="text-muted">${__("Held until")}</td><td>${this.fmt_date(bed.reserved_until)}</td></tr>
+						<tr><td class="text-muted">${__("Employee")}</td><td>${__("Not yet assigned")}</td></tr>
+						</table>
+						<div class="text-muted small">${__(
+							"This bedspace is held in bulk. Assign an employee to consume the hold, or release it back to available."
+						)}</div>`,
+				},
+				{
+					fieldname: "employee",
+					label: __("Assign Employee"),
+					fieldtype: "Link",
+					options: "Employee",
+					get_query: () => ({ filters: { status: "Active" } }),
+				},
+				{
+					fieldname: "date",
+					label: __("Check-In Date"),
+					fieldtype: "Date",
+					default: frappe.datetime.get_today(),
+				},
+			],
+			primary_action_label: __("Assign & Check In"),
+			primary_action: (v) => {
+				if (!v.employee) {
+					frappe.msgprint(__("Select an employee."));
+					return;
+				}
+				d.hide();
+				frappe.dom.freeze(__("Saving..."));
+				this.call("allocate_bed", {
+					bed: bed.name,
+					employee: v.employee,
+					date: v.date,
+					allocation_type: "Check-In",
+				})
+					.then((r) => {
+						frappe.dom.unfreeze();
+						frappe.show_alert({
+							message: __("Allocation {0} — {1}", [r.allocation, r.status]),
+							indicator: "green",
+						});
+						this.refresh_room();
+					})
+					.catch(() => frappe.dom.unfreeze());
+			},
+			secondary_action_label: __("Release Bed"),
+			secondary_action: () => {
+				d.hide();
+				frappe.confirm(__("Release this bedspace back to available?"), () => {
+					this.call("release_bulk_hold", { bed: bed.name }).then(() => {
+						frappe.show_alert({ message: __("Bedspace released."), indicator: "green" });
+						this.refresh_room();
+					});
+				});
+			},
+		});
+		d.show();
+	}
+
+	dialog_bulk_reserve() {
+		const d = new frappe.ui.Dialog({
+			title: __("Reserve Bedspaces"),
+			fields: [
+				{
+					fieldname: "accommodation",
+					label: __("Accommodation"),
+					fieldtype: "Link",
+					options: "Accommodation",
+					reqd: 1,
+					default: this.view.acc || null,
+				},
+				{
+					fieldname: "room",
+					label: __("Room (optional)"),
+					fieldtype: "Link",
+					options: "Accommodation Room",
+					get_query: (doc, cdt, cdn) => ({
+						filters: { accommodation: d.get_value("accommodation") },
+					}),
+				},
+				{
+					fieldname: "headcount",
+					label: __("No. of Beds"),
+					fieldtype: "Int",
+					reqd: 1,
+					default: 5,
+				},
+				{
+					fieldname: "purpose",
+					label: __("Purpose"),
+					fieldtype: "Select",
+					options: "New Joiners\nTransfer\nClient Visit\nOther",
+					default: "New Joiners",
+				},
+				{ fieldtype: "Column Break" },
+				{
+					fieldname: "reserved_from",
+					label: __("Reserved From"),
+					fieldtype: "Date",
+					reqd: 1,
+					default: frappe.datetime.get_today(),
+				},
+				{
+					fieldname: "reserved_until",
+					label: __("Reserved Until"),
+					fieldtype: "Date",
+					reqd: 1,
+					default: frappe.datetime.add_days(frappe.datetime.get_today(), 15),
+				},
+				{ fieldname: "remarks", label: __("Remarks"), fieldtype: "Small Text" },
+				{
+					fieldname: "note",
+					fieldtype: "HTML",
+					options: `<div class="text-muted small">${__(
+						"Beds are held without naming anyone. They release automatically the day after the end date."
+					)}</div>`,
+				},
+			],
+			primary_action_label: __("Reserve"),
+			primary_action: (v) => {
+				d.hide();
+				frappe.dom.freeze(__("Holding bedspaces..."));
+				this.call("reserve_beds", v)
+					.then((r) => {
+						frappe.dom.unfreeze();
+						frappe.show_alert({
+							message: __("{0} — {1} bed(s) held", [r.reservation, r.beds]),
+							indicator: "green",
+						});
+						this.view.name === "room" ? this.refresh_room() : this.load_home();
+					})
+					.catch(() => frappe.dom.unfreeze());
 			},
 		});
 		d.show();

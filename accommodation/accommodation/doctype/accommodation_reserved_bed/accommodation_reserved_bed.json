@@ -1,0 +1,84 @@
+{
+ "actions": [],
+ "creation": "2026-08-07 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "bed",
+  "room",
+  "room_no",
+  "bed_no",
+  "bed_position",
+  "note"
+ ],
+ "fields": [
+  {
+   "fieldname": "bed",
+   "label": "Bed",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Accommodation Bed",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 3
+  },
+  {
+   "fieldname": "room",
+   "label": "Room",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Accommodation Room",
+   "fetch_from": "bed.room",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "room_no",
+   "label": "Room No",
+   "fieldtype": "Data",
+   "read_only": 0,
+   "fetch_from": "room.room_no",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "bed_no",
+   "label": "Bed No",
+   "fieldtype": "Data",
+   "read_only": 0,
+   "fetch_from": "bed.bed_no",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "bed_position",
+   "label": "Position",
+   "fieldtype": "Data",
+   "read_only": 0,
+   "fetch_from": "bed.bed_position",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "note",
+   "label": "Note",
+   "fieldtype": "Data",
+   "read_only": 0,
+   "in_list_view": 1,
+   "columns": 2
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-07 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accommodation",
+ "name": "Accommodation Reserved Bed",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "istable": 1
+}

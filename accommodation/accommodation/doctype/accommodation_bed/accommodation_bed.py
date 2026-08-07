@@ -21,6 +21,8 @@ class AccommodationBed(Document):
 			self.reserved_for = None
 			self.expected_arrival_date = None
 			self.blocked_reason = None
+			self.bed_reservation = None
+			self.reserved_until = None
 		elif self.status == "Blocked":
 			self.current_employee = None
 			self.current_allocation = None
@@ -33,6 +35,8 @@ class AccommodationBed(Document):
 			self.reserved_for = None
 			self.expected_arrival_date = None
 			self.blocked_reason = None
+			self.bed_reservation = None
+			self.reserved_until = None
 
 	def on_update(self):
 		refresh_parent_counts(accommodation=self.accommodation, room=self.room)

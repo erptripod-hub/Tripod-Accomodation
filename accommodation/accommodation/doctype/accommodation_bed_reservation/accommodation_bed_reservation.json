@@ -1,0 +1,209 @@
+{
+ "actions": [],
+ "creation": "2026-08-07 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "accommodation",
+  "company",
+  "room",
+  "cb_1",
+  "purpose",
+  "headcount",
+  "status",
+  "sb_dates",
+  "reserved_from",
+  "cb_2",
+  "reserved_until",
+  "sb_beds",
+  "beds",
+  "sb_more",
+  "remarks",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "RES-.#####",
+   "default": "RES-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "accommodation",
+   "label": "Accommodation",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Accommodation",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Company",
+   "fetch_from": "accommodation.company",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "room",
+   "label": "Room (optional)",
+   "fieldtype": "Link",
+   "read_only": 0,
+   "options": "Accommodation Room",
+   "description": "Leave blank to pull free beds from anywhere in this accommodation."
+  },
+  {
+   "fieldname": "cb_1",
+   "label": "",
+   "fieldtype": "Column Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "purpose",
+   "label": "Purpose",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "New Joiners\nTransfer\nClient Visit\nOther",
+   "default": "New Joiners",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "headcount",
+   "label": "No. of Beds",
+   "fieldtype": "Int",
+   "read_only": 0,
+   "reqd": 1,
+   "default": "1",
+   "in_list_view": 1,
+   "description": "How many bedspaces to hold. Press Fetch Available Beds to fill the table."
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "read_only": 0,
+   "options": "Draft\nActive\nReleased\nExpired\nCancelled",
+   "default": "Draft",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "sb_dates",
+   "label": "Hold Period",
+   "fieldtype": "Section Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "reserved_from",
+   "label": "Reserved From",
+   "fieldtype": "Date",
+   "read_only": 0,
+   "reqd": 1,
+   "default": "Today"
+  },
+  {
+   "fieldname": "cb_2",
+   "label": "",
+   "fieldtype": "Column Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "reserved_until",
+   "label": "Reserved Until",
+   "fieldtype": "Date",
+   "read_only": 0,
+   "reqd": 1,
+   "description": "Beds are released automatically the day after this date."
+  },
+  {
+   "fieldname": "sb_beds",
+   "label": "Bedspaces",
+   "fieldtype": "Section Break",
+   "read_only": 0,
+   "description": "Press Fetch Available Beds, or add rows manually. Only free beds can be added."
+  },
+  {
+   "fieldname": "beds",
+   "label": "Bedspaces",
+   "fieldtype": "Table",
+   "read_only": 0,
+   "options": "Accommodation Reserved Bed"
+  },
+  {
+   "fieldname": "sb_more",
+   "label": "More",
+   "fieldtype": "Section Break",
+   "read_only": 0
+  },
+  {
+   "fieldname": "remarks",
+   "label": "Remarks",
+   "fieldtype": "Small Text",
+   "read_only": 0
+  },
+  {
+   "fieldname": "amended_from",
+   "label": "Amended From",
+   "fieldtype": "Link",
+   "read_only": 1,
+   "options": "Accommodation Bed Reservation",
+   "no_copy": 1,
+   "print_hide": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-07 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accommodation",
+ "name": "Accommodation Bed Reservation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "HR Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "autoname": "naming_series:",
+ "is_submittable": 1,
+ "title_field": "accommodation",
+ "search_fields": "accommodation,purpose,status"
+}

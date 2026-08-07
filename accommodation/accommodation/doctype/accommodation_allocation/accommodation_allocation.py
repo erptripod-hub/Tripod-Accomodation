@@ -43,17 +43,32 @@ class AccommodationAllocation(Document):
 			)
 
 	def validate_bed_available(self):
-		status, holder = frappe.db.get_value(
-			"Accommodation Bed", self.bed, ["status", "current_allocation"]
-		) or (None, None)
+		bed = frappe.db.get_value(
+			"Accommodation Bed",
+			self.bed,
+			["status", "current_allocation", "bed_reservation"],
+			as_dict=True,
+		)
+		if not bed:
+			frappe.throw(_("Bed {0} does not exist.").format(self.bed))
 
-		if status == "Blocked":
+		if bed.status == "Blocked":
 			frappe.throw(_("Bed {0} is blocked for maintenance.").format(self.bed))
 
-		if status in ("Occupied", "Reserved") and holder != self.name:
+		if bed.status == "Occupied" and bed.current_allocation != self.name:
 			frappe.throw(
-				_("Bed {0} is already {1}. Choose a free bedspace.").format(self.bed, status.lower())
+				_("Bed {0} is already occupied. Choose a free bedspace.").format(self.bed)
 			)
+
+		if bed.status == "Reserved" and bed.current_allocation != self.name:
+			# A bulk hold is a placeholder - allocating a person to it consumes the hold.
+			# A hold for a named employee still blocks anyone else.
+			if not bed.bed_reservation:
+				frappe.throw(
+					_("Bed {0} is reserved for another employee. Choose a free bedspace.").format(
+						self.bed
+					)
+				)
 
 	def validate_single_open_allocation(self):
 		other = frappe.get_all(
@@ -117,8 +132,24 @@ class AccommodationAllocation(Document):
 		self.db_set("status", "Cancelled")
 		self.release_bed()
 
+	def consume_bulk_hold(self):
+		"""If this bed was held by a bulk reservation, drop it from that hold."""
+		reservation = frappe.db.get_value("Accommodation Bed", self.bed, "bed_reservation")
+		if not reservation:
+			return
+		frappe.db.delete(
+			"Accommodation Reserved Bed", {"parent": reservation, "bed": self.bed}
+		)
+		remaining = frappe.db.count("Accommodation Reserved Bed", {"parent": reservation})
+		if not remaining:
+			frappe.db.set_value(
+				"Accommodation Bed Reservation", reservation, "status", "Released",
+				update_modified=False,
+			)
+
 	def apply_to_bed(self, bed_status):
-		values = {"status": bed_status}
+		self.consume_bulk_hold()
+		values = {"status": bed_status, "bed_reservation": None, "reserved_until": None}
 		if bed_status == "Occupied":
 			values.update(
 				{
@@ -153,6 +184,8 @@ class AccommodationAllocation(Document):
 				"current_allocation": None,
 				"reserved_for": None,
 				"expected_arrival_date": None,
+				"bed_reservation": None,
+				"reserved_until": None,
 			},
 			update_modified=False,
 		)
